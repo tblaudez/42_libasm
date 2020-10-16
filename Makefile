@@ -6,13 +6,13 @@
 #   By: tblaudez <tblaudez@student.codam.nl>         +#+                     #
 #                                                   +#+                      #
 #   Created: 2020/09/17 14:41:30 by tblaudez      #+#    #+#                 #
-#   Updated: 2020/10/15 14:22:00 by tblaudez      ########   odam.nl         #
+#   Updated: 2020/10/16 15:34:32 by tblaudez      ########   odam.nl         #
 #                                                                            #
 # ************************************************************************** #
 
 NAME=libasm.a
 
-SRC= ft_strlen.s ft_strcpy.s ft_strcmp.s ft_write.s
+SRC= ft_strlen.s ft_strcpy.s ft_strcmp.s ft_write.s ft_read.s
 HEADERS= libasm.h
 OBJ= $(SRC:%.s=%.o)
 

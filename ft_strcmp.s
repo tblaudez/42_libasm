@@ -6,7 +6,7 @@
 ;   By: tblaudez <tblaudez@student.codam.nl>         +#+                     ;
 ;                                                   +#+                      ;
 ;   Created: 2020/10/15 11:36:25 by tblaudez      #+#    #+#                 ;
-;   Updated: 2020/10/15 14:03:11 by tblaudez      ########   odam.nl         ;
+;   Updated: 2020/10/16 16:27:14 by tblaudez      ########   odam.nl         ;
 ;                                                                            ;
 ; ************************************************************************** ;
 
@@ -16,19 +16,21 @@ section .text
 _compare:
 	mov		al, [rdi+rcx]			; Put the current byte of `s1` in al
 	mov		dl, [rsi+rcx]			; and the current byte of `s2` in dl
-	cmp		al, dl
-	jl		_less					; if al is less than dl -> _less
-	jg		_greater				; else if al is greater than dl -> _greater
-	mov		al, 0					; else set al to 0
+	sub		al, dl
 	ret
-
-	_less:
-	mov		al, -1					; Set al to -1
-	ret
-
-	_greater:
-	mov		al, 1					; Set al to 1
-	ret
+	; cmp		al, dl
+	; jl		_less					; if al is less than dl -> _less
+	; jg		_greater				; else if al is greater than dl -> _greater
+	; mov		al, 0					; else set al to 0
+	; ret
+	;
+	; _less:
+	; mov		al, -1					; Set al to -1
+	; ret
+	;
+	; _greater:
+	; mov		al, 1					; Set al to 1
+	; ret
 
 _ft_strcmp:
 	xor		rcx, rcx				; Set counter to 0
