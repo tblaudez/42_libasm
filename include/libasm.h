@@ -6,7 +6,7 @@
 /*   By: tblaudez <tblaudez@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/15 10:23:31 by tblaudez      #+#    #+#                 */
-/*   Updated: 2021/06/18 15:53:24 by tblaudez      ########   odam.nl         */
+/*   Updated: 2021/06/21 12:16:14 by tblaudez      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,7 @@ char	*ft_strdup(const char *s1);
 
 int		ft_atoi_base(char *str, char *base);
 void	ft_list_push_front(t_list **begin_list, void *data);
+int		ft_list_size(t_list *begin_list);
+void	ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(), void (*free_fct)(void*));
 
 #endif
