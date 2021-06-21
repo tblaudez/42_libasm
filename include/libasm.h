@@ -6,7 +6,7 @@
 /*   By: tblaudez <tblaudez@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/15 10:23:31 by tblaudez      #+#    #+#                 */
-/*   Updated: 2021/06/16 14:10:57 by tblaudez      ########   odam.nl         */
+/*   Updated: 2021/06/18 15:53:24 by tblaudez      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,8 @@ int		ft_strcmp(const char *s1, const char *s2);
 ssize_t	ft_write(int fildes, const void *buf, size_t nbyte);
 ssize_t	ft_read(int d, void *buf, size_t nbyte);
 char	*ft_strdup(const char *s1);
+
+int		ft_atoi_base(char *str, char *base);
+void	ft_list_push_front(t_list **begin_list, void *data);
 
 #endif

@@ -10,29 +10,35 @@
 #                                                                            #
 # ************************************************************************** #
 
-NAME=libasm.a
+TARGET := libasm.a
+CC := nasm
+CFLAGS := -fmacho64
 
-SRC= ft_strlen.s ft_strcpy.s ft_strcmp.s ft_write.s ft_read.s ft_strdup.s
-HEADERS= libasm.h
-OBJ= $(SRC:%.s=%.o)
+SOURCES := src/ft_read.s src/ft_strcpy.s src/ft_strdup.s src/ft_strcmp.s \
+	src/ft_write.s src/ft_strlen.s src/bonuses/ft_atoi_base.s src/bonuses/ft_list_push_front.s
 
-CC= nasm # Hopefuly in $HOME/.brew/bin/nasm
-CFLAGS= -fmacho64
+HEADERS := include/libasm.h
+OBJECTS := $(SOURCES:%.s=%.o)
 
-all: $(NAME)
+default: $(TARGET)
+all: default
 
-$(NAME): $(OBJ) $(HEADERS)
-	ar rs $(NAME) $(OBJ)
+$(TARGET): $(OBJECTS)
+	@printf "✅ \e[96;1m%s\e[0m\n" $(TARGET)
+	@ar rs $@ $(OBJECTS) 1>/dev/null 2>&1
 
-%.o: %.s
-	$(CC) $(CFLAGS) $<
+%.o: %.s $(HEADERS)
+	@printf "🔄 \e[34m%s: \e[32m%s\e[0m\n" $(TARGET) $@
+	@$(CC) $(CFLAGS) -o $@ $<
 
 clean:
-	/bin/rm -f $(OBJ)
+	@printf "🗑  \e[31m%s\e[0m\n" $(OBJECTS)
+	@rm -f $(OBJECTS)
 
 fclean: clean
-	/bin/rm -f $(NAME)
+	@printf "🗑  \e[31;1m%s\e[0m\n" $(TARGET)
+	@rm -f $(TARGET)
 
 re: fclean all
 
-.PHONY: all clean fclean re run
+.PHONY: all clean fclean re
