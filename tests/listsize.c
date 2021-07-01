@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   listsize.c                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: tblaudez <tblaudez@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/10/15 10:42:08 by tblaudez      #+#    #+#                 */
-/*   Updated: 2021/06/30 16:59:03 by tblaudez      ########   odam.nl         */
+/*   Created: 2021/07/01 18:00:54 by tblaudez      #+#    #+#                 */
+/*   Updated: 2021/07/01 18:32:35 by tblaudez      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,34 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int compare_int(void *data1, void *data2)
+static void ft_lstclear(t_list **lst, void (*del)(void*))
 {
-	return (*((int*)data1) - *((int*)data2));
+    t_list *node = *lst;
+    t_list *tmp;
+
+    while (node) {
+        tmp = node;
+        node = node->next;
+		if (del)
+			del(tmp->data);
+		free(tmp);
+    }
+
+    *lst = NULL;
 }
 
-void display_list(t_list *node)
+int main(void)
 {
-	while (node) {
-		printf("%d | ", *((int*)node->data));
-		node = node->next;
-	}
-	printf("\n");
-}
-
-int main(void) {
-
 	t_list *list = NULL;
+	int data = 42;
 
-	for (int i = 0; i < 3; i++) {
-		int *ptr = (int*)malloc(sizeof(int));
-		*ptr = arc4random_uniform(50);
-		ft_list_push_front(&list, ptr);
+	for (int i = 0; i < 10; i++) {
+		printf("list size: %d\n", ft_list_size(list));
+		ft_list_push_front(&list, &data);
 	}
-
-	ft_list_sort(&list, compare_int);
+	
+	ft_lstclear(&list, NULL);
+	printf("list size: %d\n", ft_list_size(list));
 
 	return 0;
 }

@@ -10,35 +10,32 @@
 #                                                                            #
 # ************************************************************************** #
 
-TARGET := libasm.a
+NAME := libasm.a
+
 CC := nasm
-CFLAGS := -fmacho64 -g -I include/
+CFLAGS ?= -fmacho64 -I include/
 
-SOURCES := src/ft_read.s src/ft_strcpy.s src/ft_strdup.s src/ft_strcmp.s \
-	src/ft_write.s src/ft_strlen.s src/bonuses/ft_atoi_base.s src/bonuses/ft_list_push_front.s \
-	src/bonuses/ft_list_size.s src/bonuses/ft_list_remove_if.s src/bonuses/ft_list_sort.s
+HEADERFILES := $(addprefix include/, libasm.h)
 
-HEADERS := include/libasm.h
-OBJECTS := $(SOURCES:%.s=%.o)
+SRCFILES := $(addprefix src/, ft_read.s ft_strcmp.s ft_strcpy.s ft_strdup.s ft_strlen.s \
+	ft_write.s ft_atoi_base.s ft_list_push_front.s ft_list_remove_if.s ft_list_size.s ft_list_sort.s)
 
-default: $(TARGET)
-all: default
+OBJFILES := $(SRCFILES:src/%.s=obj/%.o)
 
-$(TARGET): $(OBJECTS)
-	@printf "✅ \e[96;1m%s\e[0m\n" $(TARGET)
-	@ar rs $@ $(OBJECTS) 1>/dev/null 2>&1
+all: $(NAME)
 
-%.o: %.s $(HEADERS)
-	@printf "🔄 \e[34m%s: \e[32m%s\e[0m\n" $(TARGET) $@
-	@$(CC) $(CFLAGS) -o $@ $<
+$(NAME): $(OBJFILES)
+	ar rs $@ $^
+
+obj/%.o: src/%.s $(HEADERFILES)
+	@mkdir -p obj/
+	$(CC) $(CFLAGS) -o $@ $<
 
 clean:
-	@printf "🗑  \e[31m%s\e[0m\n" $(OBJECTS)
-	@rm -f $(OBJECTS)
+	rm -rf obj/
 
 fclean: clean
-	@printf "🗑  \e[31;1m%s\e[0m\n" $(TARGET)
-	@rm -f $(TARGET)
+	rm -f $(NAME)
 
 re: fclean all
 

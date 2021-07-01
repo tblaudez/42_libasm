@@ -23,7 +23,9 @@ _ft_list_push_front:
 	push	rdi
 	push	rsi
 	mov		rdi, 16
+	sub		rsp, 8
 	call	_malloc
+	add		rsp, 8
 	pop		rsi
 	pop		rdi
 
