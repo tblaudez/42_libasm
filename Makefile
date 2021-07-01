@@ -12,11 +12,11 @@
 
 TARGET := libasm.a
 CC := nasm
-CFLAGS := -fmacho64 -g
+CFLAGS := -fmacho64 -g -I include/
 
 SOURCES := src/ft_read.s src/ft_strcpy.s src/ft_strdup.s src/ft_strcmp.s \
 	src/ft_write.s src/ft_strlen.s src/bonuses/ft_atoi_base.s src/bonuses/ft_list_push_front.s \
-	src/bonuses/ft_list_size.s src/bonuses/ft_list_remove_if.s
+	src/bonuses/ft_list_size.s src/bonuses/ft_list_remove_if.s src/bonuses/ft_list_sort.s
 
 HEADERS := include/libasm.h
 OBJECTS := $(SOURCES:%.s=%.o)

@@ -10,22 +10,20 @@
 ;                                                                            ;
 ; ************************************************************************** ;
 
-	global	_ft_strcpy				; size_t ft_strcpy(char *dst, const char *src)
+global	_ft_strcpy
 
-section	.text
+; char	*ft_strcpy(char *dst, const char *src)
 _ft_strcpy:
-	push	rdi						; Push `dst` in stack to be restored later
-	xor		rcx, rcx				; Set counter to 0
+	xor		rcx, rcx
+	mov		rax, rdi
 
 _loop:
-	cmp		[rsi+rcx], byte  0		; Check if (`src` + counter) is pointing to NULL
-	jz		_done					; If so, return
-	mov		al, [rsi+rcx]			; Move (`src` + counter) char to `dst` using 8-bits register al
-	mov		[rdi+rcx], al
-	inc		rcx						; Increment counter
-	jmp		_loop					; Next iteration
+	cmp		byte [rsi + rcx], 0
+	je		_done
+	mov		dl, byte [rsi + rcx]
+	mov		byte [rdi + rcx], dl
+	inc		rcx
+	jmp		_loop
 
 _done:
-	mov		[rdi+rcx], byte 0		; Copy the terminating '\0' in dst
-	pop		rax						; Restore `dst` to rax before returning
 	ret

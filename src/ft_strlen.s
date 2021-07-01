@@ -10,18 +10,17 @@
 ;                                                                            ;
 ; ************************************************************************** ;
 
-	global	_ft_strlen			; size_t ft_strlen(const char *s)
+global	_ft_strlen
 
-section	.text
+; size_t ft_strlen(const char *s)
 _ft_strlen:
-	xor		rcx, rcx			; Set counter to 0
+	xor		rax, rax
 
 _loop:
-	cmp		[rdi+rcx], byte 0	; Check if `s` + counter is pointing to '\0'
-	jz		_done				; If so, return
-	inc		rcx					; Increment counter
-	jmp		_loop				; Next iteration
+	cmp		byte [rdi + rax], 0
+	je		_done
+	inc		rax
+	jmp		_loop
 
 _done:
-	mov		rax, rcx			; Counter is equal to the length of the string, move it to rax
 	ret

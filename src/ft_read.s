@@ -10,22 +10,21 @@
 ;                                                                            ;
 ; ************************************************************************** ;
 
-	global			_ft_read		; ssize_t ft_read(int d, void *buf, size_t nbyte)
-	extern			___error
-	SYS_READ_OSX	equ 0x02000003	; Alias for read syscall
+global			_ft_read		
+extern			___error
+SYS_READ_OSX equ 0x02000003			; Alias for read syscall
 
 
-section .text
+; ssize_t ft_read(int d, void *buf, size_t nbyte)
 _ft_read:
-	mov	rax, SYS_READ_OSX			; Prepare read syscall
-	syscall							; Data are in the correct registers already
-	jc	_error						; If CF is set, there was an error
-	ret								; Return value is already in rax
+	mov		rax, SYS_READ_OSX
+	syscall
+	jc		_error
+	ret
 
 _error:
-	push	rax						; rax contains read syscall return value, push it in stack
-	call	___error				; Get pointer to errno, stack is aligned thanks to previous line
-	pop		rdx						; Put read syscall return value in rdx
-	mov		[rax], rdx				; Set errno to read syscall return value
-	mov		rax, -1					; Return -1
+	push	rax
+	call	___error		; rax = &errno
+	pop		qword [rax]
+	mov		rax, -1
 	ret

@@ -10,31 +10,31 @@
 ;                                                                            ;
 ; ************************************************************************** ;
 
-	global	_ft_strdup				; char *ft_strdup(const char *s1)
-	extern	_malloc
-	extern	_ft_strlen
-	extern	_ft_strcpy
+global _ft_strdup
+extern _malloc
+extern _ft_strlen
+extern _ft_strcpy
 
-section	.text
+%define NULL 0x0
+
+; char *ft_strdup(const char *s1)
 _ft_strdup:
-_get_length:
-	push	rdi						; Push `s1` in stack
-	call	_ft_strlen				; rax now contains length of s1
-	push	rax						; Push length of `s1` in stack
-_get_memory:
-	mov		rdi, rax				; Set length of `s1` as malloc parameter
-	inc		rdi						; Add space for terminating '\0'
-	sub		rsp, 8
-	call	_malloc					; rax now contain pointer to writable memory
-	add		rsp, 8
-	jc		_error					; If error, jump to end
-_copy_string:
-	mov 	rdi, rax				; Move memory as the 'dst' parameter of ft_strcpy
-	pop		rcx						; Pop length of `s1` in rdi
-	mov 	[rdi+rcx], byte 0		; Set terminating '\0' to new memory
-	pop		rsi						; Pop `s1` as the 'src' parameter of ft_strcpy
-	call	_ft_strcpy				; Pointer to new memory is in rax
-	ret
+	xor		rax, rax
 
-_error:
-	ret		16
+	cmp		rdi, NULL
+	je		_done
+	call	_ft_strlen
+	inc		rax					; rax = ft_strlen(s1) + 1
+	
+	push	rdi
+	mov		rdi, rax
+	call	_malloc				; rax = malloc(strlen(s1) + 1)
+	pop		rsi
+	cmp		rax, NULL			; Check malloc return
+	je		_done
+
+	mov		rdi, rax
+	call	_ft_strcpy
+
+_done:
+	ret

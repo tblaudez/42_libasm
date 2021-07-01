@@ -10,23 +10,27 @@
 ;                                                                            ;
 ; ************************************************************************** ;
 
-	global _ft_list_push_front		; void ft_list_push_front(t_list **begin_list, void *data);
-	extern _malloc
+global _ft_list_push_front		
+extern _malloc
 
-section .text
+%define NULL 0x0
+
+; void ft_list_push_front(t_list **begin_list, void *data);
 _ft_list_push_front:
-	push	rdi						; save function's parameters
+	cmp		rdi, NULL
+	je		_done
+
+	push	rdi
 	push	rsi
-_create_node:
-	mov		rdi, 16					; set 16 as first parameter of malloc
-	sub		rsp, 8					; align stack
-	call	_malloc					; rax now contain 16 bytes of allocated memory
-	add		rsp, 8
-	pop		rsi						; restore function's parameters
+	mov		rdi, 16
+	call	_malloc
+	pop		rsi
 	pop		rdi
-_fill_value:
-	mov		[rax], rsi				; copy `data` to allocated memory
-	mov		r8, [rdi]
-	mov		[rax+8], r8				; copy `*begin_list` to `next` to allocated memory 
-	mov		[rdi], rax				; copy pointer  to allocated memory to `*begin_list`
+
+	mov		qword [rax + 0], rsi		; new_node->data = data
+	mov		r10, qword [rdi]
+	mov		qword [rax + 8], r10		; new_node->next = *begin_list
+	mov		qword [rdi], rax			; *begin_list = new_node
+
+_done:
 	ret
