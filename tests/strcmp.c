@@ -6,7 +6,7 @@
 /*   By: tblaudez <tblaudez@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/07/01 15:57:16 by tblaudez      #+#    #+#                 */
-/*   Updated: 2021/07/01 16:43:01 by tblaudez      ########   odam.nl         */
+/*   Updated: 2021/07/12 13:05:59 by tblaudez      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 int main(int argc, char **argv)
 {
 	if (argc < 3) {
-		printf("Gimme string and string\n");
+		printf("Gimme str1 and str2\n");
 		return 1;
 	}
 	
